@@ -6,6 +6,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericRelation
 
+from ckeditor.fields import RichTextField
+
 
 class Category(models.Model):
     text_fa = models.CharField(max_length=40, unique=True)
@@ -66,8 +68,8 @@ class Comment(models.Model):
 class Page(models.Model):
     title_fa = models.CharField(max_length=500)
     title_en = models.CharField(max_length=500)
-    text_fa = models.TextField()
-    text_en = models.TextField()
+    text_fa = RichTextField()
+    text_en = RichTextField()
     image = models.ImageField(upload_to="images/posts", blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.DO_NOTHING, 
@@ -86,8 +88,8 @@ class Page(models.Model):
 class News(models.Model):
     title_fa = models.CharField(max_length=500)
     title_en = models.CharField(max_length=500)
-    text_fa = models.TextField()
-    text_en = models.TextField()
+    text_fa = RichTextField()
+    text_en = RichTextField()
     image = models.ImageField(upload_to="images/posts", blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     created_date = models.DateTimeField(default=now)

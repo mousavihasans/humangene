@@ -8,3 +8,4 @@ tzlocal
 jdatetime
 django-debug-toolbar
 django_rest_framework_redocs
+django-ckeditor
