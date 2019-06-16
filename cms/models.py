@@ -99,6 +99,9 @@ class News(models.Model):
     likes = GenericRelation(Like, related_query_name='news', blank=True, null=True, on_delete=models.CASCADE)
     dislikes = GenericRelation(Dislike, related_query_name='news', blank=True, null=True, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name_plural = 'News'
+
     def __str__(self):
         return str(self.title_fa)
 

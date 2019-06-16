@@ -21,6 +21,7 @@ from rest_framework_swagger.views import get_swagger_view
 urlpatterns = [
     path('cms/', include('cms.urls')),
     path('task/', include('customersupport.urls')),
+    path('query/', include('genomequery.urls')),
     path('admin/', admin.site.urls),
     path('docs/', get_swagger_view(title='Pastebin API'))
 ]
