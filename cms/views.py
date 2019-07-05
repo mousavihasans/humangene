@@ -55,6 +55,17 @@ class NewsList(generics.ListAPIView):
         return News.objects.filter(published_date__lte=now())
 
 
+class NewsDetail(mixins.RetrieveModelMixin,
+                 generics.GenericAPIView):
+    serializer_class = NewsSerializer
+
+    def get_queryset(self):
+        return News.objects.filter(published_date__lte=now())
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
 class NewsCommentList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     serializer_class = CommentSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
