@@ -1,7 +1,8 @@
 from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
 
-from cms.models import Page, News, Slider, Tag, Category, Comment
+from cms.models import Page, News, Slider, Tag, Category, Comment, SliderItem, Service, Feature, CustomerCompanies, \
+    CompanyMembers
 from utils.date import TimestampField
 
 
@@ -49,7 +50,15 @@ class NewsSerializer(serializers.ModelSerializer):
         fields = ('id', 'title_fa', 'title_en', 'text_fa', 'text_en', 'image', 'comments')
 
 
+class SliderItemSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SliderItem
+        fields = ('id', 'order', 'image', 'text_fa', 'text_en', 'url')
+
+
 class SliderSerializer(serializers.ModelSerializer):
+    items = SliderItemSerializer(read_only=True, many=True)
 
     class Meta:
         model = Slider
@@ -68,5 +77,33 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('id', 'text_fa', 'text_en')
+
+
+class ServiceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Service
+        fields = ('id', 'title', 'image', 'description', 'link')
+
+
+class FeatureSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Feature
+        fields = ('id', 'title', 'icon', 'description')
+
+
+class CustomerCompaniesSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CustomerCompanies
+        fields = ('id', 'title', 'image', 'link')
+
+
+class CompanyMembersSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CompanyMembers
+        fields = ('id', 'image', 'job', 'name', 'description', 'email')
 
 

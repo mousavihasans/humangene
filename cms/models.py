@@ -70,7 +70,7 @@ class Page(models.Model):
     title_en = models.CharField(max_length=500)
     text_fa = RichTextField()
     text_en = RichTextField()
-    image = models.ImageField(upload_to="images/posts", blank=True, null=True)
+    image = models.ImageField(upload_to='images/posts', blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.DO_NOTHING, 
     help_text="مقاله در این منو نشان داده خواهد شد.")
@@ -90,7 +90,7 @@ class News(models.Model):
     title_en = models.CharField(max_length=500)
     text_fa = RichTextField()
     text_en = RichTextField()
-    image = models.ImageField(upload_to="images/posts", blank=True, null=True)
+    image = models.ImageField(upload_to='images/posts', blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
     created_date = models.DateTimeField(default=now)
     published_date = models.DateTimeField(default=now)
@@ -108,13 +108,13 @@ class News(models.Model):
 
 class SliderItem(models.Model):
     order = models.IntegerField(default=0)
-    image = models.ImageField(upload_to="images/sliders")
+    image = models.ImageField(upload_to='images/sliders')
     text_fa = models.CharField(max_length=300)
     text_en = models.CharField(max_length=300)
     url = models.URLField()
 
     def __str__(self):
-        return str(self.id)
+        return self.text_fa
 
 
 class Slider(models.Model):
@@ -125,3 +125,40 @@ class Slider(models.Model):
         return self.name
 
 
+class CompanyMembers(models.Model):
+    image = models.ImageField(upload_to='images/company_members')
+    name = models.CharField(max_length=200)
+    job = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.name
+
+
+class CustomerCompanies(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/customer_companies')
+    link = models.URLField()
+
+    def __str__(self):
+        return self.title
+
+
+class Feature(models.Model):
+    title = models.CharField(max_length=200)
+    icon = models.ImageField(upload_to='images/features')
+    description = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.title
+
+
+class Service(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/services')
+    description = models.CharField(max_length=500)
+    link = models.URLField()
+
+    def __str__(self):
+        return self.title

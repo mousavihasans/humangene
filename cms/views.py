@@ -3,8 +3,9 @@ from django.utils.timezone import now
 from rest_framework import mixins, generics
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
-from cms.models import Page, News, Category, Comment
-from cms.serializers import PageSerializer, NewsSerializer, CategorySerializer, CommentSerializer
+from cms.models import Page, News, Category, Comment, Slider, Service, Feature, CustomerCompanies, CompanyMembers
+from cms.serializers import PageSerializer, NewsSerializer, CategorySerializer, CommentSerializer, SliderSerializer, \
+    ServiceSerializer, FeatureSerializer, CustomerCompaniesSerializer, CompanyMembersSerializer
 
 
 class PageList(generics.ListAPIView):
@@ -95,3 +96,37 @@ class CategoryList(generics.ListAPIView):
     def get_queryset(self):
         return Category.objects.all()
 
+
+class SliderList(generics.ListAPIView):
+    serializer_class = SliderSerializer
+
+    def get_queryset(self):
+        return Slider.objects.all()
+
+
+class ServiceList(generics.ListAPIView):
+    serializer_class = ServiceSerializer
+
+    def get_queryset(self):
+        return Service.objects.all()
+
+
+class FeatureList(generics.ListAPIView):
+    serializer_class = FeatureSerializer
+
+    def get_queryset(self):
+        return Feature.objects.all()
+
+
+class CompanyList(generics.ListAPIView):
+    serializer_class = CustomerCompaniesSerializer
+
+    def get_queryset(self):
+        return CustomerCompanies.objects.all()
+
+
+class CompanyMemberList(generics.ListAPIView):
+    serializer_class = CompanyMembersSerializer
+
+    def get_queryset(self):
+        return CompanyMembers.objects.all()
