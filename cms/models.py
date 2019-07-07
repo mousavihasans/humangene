@@ -72,8 +72,7 @@ class Page(models.Model):
     text_en = RichTextField()
     image = models.ImageField(upload_to='images/posts', blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
-    category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.DO_NOTHING, 
-    help_text="مقاله در این منو نشان داده خواهد شد.")
+    category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.DO_NOTHING)
     created_date = models.DateTimeField(default=now)
     published_date = models.DateTimeField(default=now)
 
@@ -92,6 +91,7 @@ class News(models.Model):
     text_en = RichTextField()
     image = models.ImageField(upload_to='images/posts', blank=True, null=True)
     tags = models.ManyToManyField(Tag, blank=True)
+    category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.DO_NOTHING)
     created_date = models.DateTimeField(default=now)
     published_date = models.DateTimeField(default=now)
 
@@ -147,7 +147,7 @@ class CustomerCompanies(models.Model):
 
 class Feature(models.Model):
     title = models.CharField(max_length=200)
-    icon = models.ImageField(upload_to='images/features')
+    icon = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
 
     def __str__(self):

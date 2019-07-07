@@ -18,7 +18,7 @@ class PageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Page
-        fields = ('id', 'title_fa', 'title_en', 'text_fa', 'text_en', 'image', 'category', 'comments')
+        fields = ('id', 'title_fa', 'title_en', 'text_fa', 'text_en', 'image', 'category', 'published_date', 'comments')
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -47,7 +47,7 @@ class NewsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = News
-        fields = ('id', 'title_fa', 'title_en', 'text_fa', 'text_en', 'image', 'comments')
+        fields = ('id', 'title_fa', 'title_en', 'text_fa', 'text_en', 'image', 'category', 'published_date', 'comments')
 
 
 class SliderItemSerializer(serializers.ModelSerializer):
