@@ -1,7 +1,7 @@
 from django.urls import path
 
 from cms.views import PageList, NewsList, CategoryList, PageDetail, NewsCommentList, PageCommentList, NewsDetail, \
-    SliderList, ServiceList, FeatureList, CompanyList, CompanyMemberList
+    SliderList, ServiceList, FeatureList, CompanyList, CompanyMemberList, ContactMessageList
 
 urlpatterns = [
     path('page', PageList.as_view(), name='page_list'),
@@ -16,6 +16,7 @@ urlpatterns = [
     path('feature', FeatureList.as_view(), name='feature_list'),
     path('companies', CompanyList.as_view(), name='companies_list'),
     path('members', CompanyMemberList.as_view(), name='member_list'),
+    path('contactus', ContactMessageList.as_view(), name='contact_message_list'),
 
 
 

@@ -2,7 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
 
 from cms.models import Page, News, Slider, Tag, Category, Comment, SliderItem, Service, Feature, CustomerCompanies, \
-    CompanyMembers
+    CompanyMembers, ContactMessage
 from utils.date import TimestampField
 
 
@@ -105,5 +105,12 @@ class CompanyMembersSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyMembers
         fields = ('id', 'image', 'job', 'name', 'description', 'email')
+
+
+class ContactMessageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ContactMessage
+        fields = ('id', 'name', 'text', 'email')
 
 

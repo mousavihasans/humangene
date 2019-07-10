@@ -1,4 +1,6 @@
 import datetime
+import random
+
 from django.utils.timezone import now
 from rest_framework.permissions import IsAuthenticated
 
@@ -33,18 +35,21 @@ class GenomeQueryAPIView(generics.CreateAPIView):
 
         if num_of_daily_query_by_user < genome_query.free_daily_number:
             #perform free
-            self.perform_query(request, genome_query, 'sdfsdf', query_type=QueryTypeChoices.free_daily)
+            q_result = self.perform_query(request, genome_query, 'sdfsdf', query_type=QueryTypeChoices.free_daily)
+            result['q_result'] = q_result
             result['result'] = 'performed free daily query'
 
         elif QueryItem.objects.filter(type=QueryTypeChoices.created_manually,
                                       performed_by=request.user, performed_at=None).count() > 0:
             # performe a manually created
-            self.perform_query(request, genome_query, 'sdfsdf', query_type=QueryTypeChoices.created_manually)
+            q_result = self.perform_query(request, genome_query, 'sdfsdf', query_type=QueryTypeChoices.created_manually)
+            result['q_result'] = q_result
             result['result'] = 'performed a manually created'
         elif QueryItem.objects.filter(type=QueryTypeChoices.bought_by_credit,
                                         performed_by=request.user, performed_at=None).count() > 0:
             # perform credit
-            self.perform_query(request, genome_query, 'sdfsdf', query_type=QueryTypeChoices.bought_by_credit)
+            q_result = self.perform_query(request, genome_query, 'sdfsdf', query_type=QueryTypeChoices.bought_by_credit)
+            result['q_result'] = q_result
             result['result'] = 'performe cridit'
         else:
             # return that the user should buy query item
@@ -72,4 +77,52 @@ class GenomeQueryAPIView(generics.CreateAPIView):
                                                   performed_at=None).first()
             query_item.performed_at = now()
             query_item.save()
-        return 'answer'
+
+        # fake query result
+        fake_items = [
+            {
+                'Sample ID': 'MOT2503',
+                'Age': 'UNK',
+                'Sex': 'UNK',
+                'Phenotype': 'UNK',
+                'family History': 'UNK',
+                'Zygosity': 'hom',
+                'Depth': '58',
+                'Alt': 'T',
+                'Diagnosis': '[617827]Immunodeficiency 55'
+            },
+            {
+                'Sample ID': 'MOT2503',
+                'Age': '25',
+                'Sex': 'UNK',
+                'Phenotype': 'H',
+                'family History': 'Family Marriage-gangliosidosis-Mental Retardation-Congenital Heart Disease-Paralysis-Seizure-Blindness-Speech Problem',
+                'Zygosity': 'hom',
+                'Depth': '51',
+                'Alt': 'T',
+                'Diagnosis': '[616118]Macular degeneration, early-onset'
+            },
+            {
+                'Sample ID': 'MOT2503',
+                'Age': '1.5',
+                'Sex': 'UNK',
+                'Phenotype': 'Nephrotic Syndrome',
+                'family History': 'Family Marriage-Paralysis',
+                'Zygosity': 'hom',
+                'Depth': '5',
+                'Alt': 'T',
+                'Diagnosis': '[603546]Spondyloepimetaphyseal dysplasia with joint laxity, type 2'
+            },
+            {
+                'Sample ID': 'MOT2503',
+                'Age': 'UNK',
+                'Sex': 'UNK',
+                'Phenotype': 'UNK',
+                'family History': 'UNK',
+                'Zygosity': 'hom',
+                'Depth': '70',
+                'Alt': 'T',
+                'Diagnosis': '[616118]Macular degeneration, early-onset'
+            },
+        ]
+        return [fake_items[random.randint(0, 3)] for x in range(0, random.randint(0, 50))]

@@ -3,9 +3,11 @@ from django.utils.timezone import now
 from rest_framework import mixins, generics
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
-from cms.models import Page, News, Category, Comment, Slider, Service, Feature, CustomerCompanies, CompanyMembers
+from cms.models import Page, News, Category, Comment, Slider, Service, Feature, CustomerCompanies, CompanyMembers, \
+    ContactMessage
 from cms.serializers import PageSerializer, NewsSerializer, CategorySerializer, CommentSerializer, SliderSerializer, \
-    ServiceSerializer, FeatureSerializer, CustomerCompaniesSerializer, CompanyMembersSerializer
+    ServiceSerializer, FeatureSerializer, CustomerCompaniesSerializer, CompanyMembersSerializer, \
+    ContactMessageSerializer
 
 
 class PageList(generics.ListAPIView):
@@ -130,3 +132,11 @@ class CompanyMemberList(generics.ListAPIView):
 
     def get_queryset(self):
         return CompanyMembers.objects.all()
+
+
+class ContactMessageList(generics.CreateAPIView):
+    # use throtelling
+    serializer_class = ContactMessageSerializer
+
+    def get_queryset(self):
+        return ContactMessage.objects.all()

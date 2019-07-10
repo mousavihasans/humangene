@@ -3,7 +3,7 @@ from django.contrib.admin.decorators import register
 from django.contrib.contenttypes.admin import GenericStackedInline
 
 from cms.models import Page, Tag, Category, News, Comment, CustomerCompanies, Service, Feature, CompanyMembers, Slider, \
-    SliderItem
+    SliderItem, ContactMessage
 
 
 class CommentInline(GenericStackedInline):
@@ -68,4 +68,9 @@ class FeatureAdmin(admin.ModelAdmin):
 
 @register(CompanyMembers)
 class CompanyMemberAdmin(admin.ModelAdmin):
+    pass
+
+
+@register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
     pass

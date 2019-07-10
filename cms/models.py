@@ -111,6 +111,7 @@ class SliderItem(models.Model):
     image = models.ImageField(upload_to='images/sliders')
     text_fa = models.CharField(max_length=300)
     text_en = models.CharField(max_length=300)
+    description = models.CharField(max_length=500)
     url = models.URLField()
 
     def __str__(self):
@@ -162,3 +163,15 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=200)
+    text = models.CharField(max_length=500)
+    email = models.EmailField()
+    created_at = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.name
+
+
