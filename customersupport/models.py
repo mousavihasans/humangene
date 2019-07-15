@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.timezone import now
 
+from humangene import settings
 from utils.intenum import IntEnumField
 
 
@@ -16,7 +17,7 @@ class TaskStateChoices(IntEnum):
 
 
 class TrackTask(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, unique=True)
     state = IntEnumField(TaskStateChoices, default=TaskStateChoices.accepted)
     result = models.FileField(upload_to='files/', null=True, blank=True)

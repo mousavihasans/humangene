@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.timezone import now
 
+from humangene import settings
 from utils.intenum import IntEnumField
 
 
@@ -27,9 +28,9 @@ class QueryItem(models.Model):
     genome_query = models.ForeignKey(GenomeQuery, on_delete=models.PROTECT)
     type = IntEnumField(QueryTypeChoices, default=QueryTypeChoices.created_manually)
     response = models.TextField(null=True, blank=True)
-    created_by = models.ForeignKey(User, null=True, on_delete=models.DO_NOTHING, related_name='created_queries')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.DO_NOTHING, related_name='created_queries')
     created_at = models.DateTimeField(default=now)
-    performed_by = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='performed_queries')
+    performed_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, related_name='performed_queries')
     performed_at = models.DateTimeField(default=now, null=True, blank=True)
 
     def __str__(self):

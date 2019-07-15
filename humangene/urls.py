@@ -23,6 +23,7 @@ urlpatterns = [
     path('task/', include('customersupport.urls')),
     path('query/', include('genomequery.urls')),
     path('admin/', admin.site.urls),
+    path('member/', include('members.urls')),
     path('docs/', get_swagger_view(title='Pastebin API'))
 ]
 

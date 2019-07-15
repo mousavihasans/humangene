@@ -1,3 +1,64 @@
-from django.shortcuts import render
+from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import ValidationError
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-# Create your views here.
+from humangene import settings
+from members.models import Member
+from members.serializers import RegisterSerializer, VerifySerializer, MemberSerializer
+
+
+class RegisterView(APIView):
+    def post(self, request):
+        
+        # register_manager = RegisterManager()
+        serializer = RegisterSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        member, _ = Member.objects.get_or_create(email=serializer.data['email'],
+                                                 password=serializer.data['password'],
+                                                 defaults=dict(
+                                                    is_active=True,
+                                                 ))
+
+        result = {
+            'success': True,
+            }
+
+        return Response(result)
+
+
+class LoginView(APIView):
+    def post(self, request, format=None):
+        serializer = VerifySerializer(data=request.data)
+        # serializer.is_valid(raise_exception=True)
+        try:
+            # self.member = Member.objects.get(email=serializer.data['email'], password=serializer.data['password'])
+            self.member = Member.objects.get(email=request.data['email'], password=request.data['password'])
+        except Exception as e:
+            raise ValidationError('Email or password is wrong!.')
+
+        return Response({
+            'token': Token.objects.get(user=self.member).key
+        })
+
+
+class UserProfileView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
+    """
+    Returns Member's details in JSON format.
+    """
+    serializer_class = MemberSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def get_object(self):
+        return Member.objects.get(pk=self.request.user.pk)

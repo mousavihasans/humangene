@@ -78,6 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'humangene.wsgi.application'
 
+AUTH_USER_MODEL = 'members.Member'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

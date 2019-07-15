@@ -8,6 +8,8 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 from ckeditor.fields import RichTextField
 
+from humangene import settings
+
 
 class Category(models.Model):
     text_fa = models.CharField(max_length=40, unique=True)
@@ -26,7 +28,7 @@ class Tag(models.Model):
 
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -36,7 +38,7 @@ class Like(models.Model):
 
 
 class Dislike(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -46,7 +48,7 @@ class Dislike(models.Model):
 
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
@@ -54,7 +56,7 @@ class Comment(models.Model):
 
     text = models.CharField(max_length=1000)
     is_approved = models.BooleanField(default=False)
-    supervised_by = models.ForeignKey(User, blank=True, null=True, related_name='supervised_by',
+    supervised_by = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True, related_name='supervised_by',
                                       on_delete=models.DO_NOTHING)
     supervised_date = models.DateTimeField(blank=True, null=True)
 
