@@ -35,16 +35,15 @@ class RegisterView(APIView):
 class LoginView(APIView):
     def post(self, request, format=None):
         serializer = VerifySerializer(data=request.data)
-        # serializer.is_valid(raise_exception=True)
+        serializer.is_valid(raise_exception=True)
         try:
-            # self.member = Member.objects.get(email=serializer.data['email'], password=serializer.data['password'])
-            self.member = Member.objects.get(email=request.data['email'], password=request.data['password'])
+            self.member = Member.objects.get(email=serializer.data['email'], password=serializer.data['password'])
         except Exception as e:
             raise ValidationError('Email or password is wrong!.')
+        serialized_member = MemberSerializer(serializer.member).data
+        serialized_member['token'] = Token.objects.get(user=self.member).key
 
-        return Response({
-            'token': Token.objects.get(user=self.member).key
-        })
+        return Response(serialized_member)
 
 
 class UserProfileView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
