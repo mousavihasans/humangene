@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'cms',
     'customersupport',
     'genomequery',
-    'webpack_loader',
 ]
 
 MIDDLEWARE = [
