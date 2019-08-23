@@ -4,7 +4,7 @@ from rest_framework import serializers
 import django.contrib.auth.password_validation as validators
 
 from humangene import settings
-from members.models import Member
+from members.models import Member, IncreaseCreditViaBank
 
 
 class RegisterSerializer(serializers.Serializer):
@@ -60,3 +60,9 @@ class MemberSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'email', 'password', 'credit', 'profile_picture')
         read_only_fields = ('email', 'credit')
 
+
+class IncreaseCreditViaBankSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = IncreaseCreditViaBank
+        fields = ('id', 'amount', 'status', 'tracking_code', 'created_at')
+        read_only_fields = ('id', 'amount', 'status', 'tracking_code', 'created_at')

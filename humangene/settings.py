@@ -41,12 +41,11 @@ INSTALLED_APPS = [
     'ckeditor',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_framework_swagger',
-    # 'django_rest_framework_redocs',
     'members',
     'cms',
     'customersupport',
     'genomequery',
+    'webpack_loader',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +64,7 @@ ROOT_URLCONF = 'humangene.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,7 +141,9 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:3000",
+    "http://127.0.0.1:3001",
     "http://localhost:3000",
+    "http://localhost:3001",
 ]
 
 CORS_ALLOW_METHODS = (
@@ -165,3 +166,10 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
 )
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+            'BUNDLE_DIR_NAME': 'bundles/',
+            'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
+        }
+}

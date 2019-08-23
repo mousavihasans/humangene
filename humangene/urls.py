@@ -15,8 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.authtoken import views
-from rest_framework_swagger.views import get_swagger_view
 
 urlpatterns = [
     path('cms/', include('cms.urls')),
@@ -24,9 +22,5 @@ urlpatterns = [
     path('query/', include('genomequery.urls')),
     path('admin/', admin.site.urls),
     path('member/', include('members.urls')),
-    path('docs/', get_swagger_view(title='Pastebin API'))
 ]
 
-urlpatterns += [
-    path(r'api-token-auth/', views.obtain_auth_token)
-]

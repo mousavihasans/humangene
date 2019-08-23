@@ -107,3 +107,8 @@ class MemberAdmin(BaseUserAdmin):
             )
 
         return ()
+
+
+register(IncreaseCreditViaBank)
+class IncreaseCreditViaBankAdmin(admin.ModelAdmin):
+    pass

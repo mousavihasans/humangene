@@ -17,8 +17,5 @@ urlpatterns = [
     path('companies', CompanyList.as_view(), name='companies_list'),
     path('members', CompanyMemberList.as_view(), name='member_list'),
     path('contactus', ContactMessageList.as_view(), name='contact_message_list'),
-
-
-
     path('category', CategoryList.as_view(), name='category_list'),
 ]

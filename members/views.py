@@ -1,14 +1,14 @@
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
+from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin, ListModelMixin
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from humangene import settings
 from members.models import Member
-from members.serializers import RegisterSerializer, VerifySerializer, MemberSerializer
+from members.serializers import RegisterSerializer, VerifySerializer, MemberSerializer, IncreaseCreditViaBankSerializer
 
 
 class RegisterView(APIView):
@@ -61,3 +61,10 @@ class UserProfileView(RetrieveModelMixin, UpdateModelMixin, GenericAPIView):
 
     def get_object(self):
         return Member.objects.get(pk=self.request.user.pk)
+
+
+class TransactionListView(ListModelMixin, GenericAPIView):
+    serializer_class = IncreaseCreditViaBankSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
