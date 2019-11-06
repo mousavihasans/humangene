@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin.decorators import register
 from django.contrib.contenttypes.admin import GenericStackedInline
 
-from cms.models import Page, Tag, Category, News, Comment, CustomerCompanies, Service, Feature, CompanyMembers, Slider, \
+from cms.models import Content, Tag, Category, Comment, CustomerCompanies, Service, Feature, CompanyMembers, Slider, \
     SliderItem, ContactMessage
 
 
@@ -14,16 +14,16 @@ class CommentInline(GenericStackedInline):
     # extra = 0
 
 
-@register(Page)
+@register(Content)
 class PageAdmin(admin.ModelAdmin):
     inlines = [CommentInline]
     list_display = ('title_fa', 'title_en', 'text_fa', 'image', 'category', 'published_date')
     # readonly_fields = ('title',)
 
 
-@register(News)
-class NewsAdmin(admin.ModelAdmin):
-    inlines = [CommentInline]
+# @register(News)
+# class NewsAdmin(admin.ModelAdmin):
+#     inlines = [CommentInline]
 
 
 @register(SliderItem)

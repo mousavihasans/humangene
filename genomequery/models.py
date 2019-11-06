@@ -34,6 +34,6 @@ class QueryItem(models.Model):
     performed_at = models.DateTimeField(default=now, null=True, blank=True)
 
     def __str__(self):
-        name = str(QueryTypeChoices(self.type).name) + ' for ' + self.performed_by.username
+        name = str(QueryTypeChoices(self.type).name) + ' by ' + self.performed_by.username
         return name
 

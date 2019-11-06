@@ -3,10 +3,13 @@ node_modules/
 *.pyc
 ~*
 env/
+.env/
 local_settings.py
 db.sqlite3
 tmp/
 media/
 dist/
 images/
+static/
+staticfiles/
 

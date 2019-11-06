@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.core.mail import send_mail
 from humangene import settings
 from members.models import Member
 from members.serializers import RegisterSerializer, VerifySerializer, MemberSerializer, IncreaseCreditViaBankSerializer
@@ -18,6 +19,8 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
+
+        # todo: make atomic
 
         member, _ = Member.objects.get_or_create(email=serializer.data['email'],
                                                  password=serializer.data['password'],

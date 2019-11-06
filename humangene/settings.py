@@ -27,6 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# For Gmail
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'humangene.ir@gmail.com'
+EMAIL_HOST_PASSWORD = 'humangene.ir01'
+EMAIL_PORT = 587
+
 
 # Application definition
 
@@ -56,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'humangene.urls'
@@ -112,12 +120,18 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
+LANGUAGES = (
+    ('fa', 'Farsi'),
+    ('en', 'English')
+)
 
-LANGUAGE_CODE = 'en-us'
+
+LANGUAGE_CODE = 'fa'
 
 TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
+prefix_default_language = False
 
 USE_L10N = True
 
@@ -128,6 +142,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join('static')
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -143,6 +159,10 @@ CORS_ORIGIN_WHITELIST = [
     "http://127.0.0.1:3001",
     "http://localhost:3000",
     "http://localhost:3001",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:8001",
+    "http://localhost:8000",
+    "http://localhost:8001",
 ]
 
 CORS_ALLOW_METHODS = (
@@ -166,9 +186,9 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
 )
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-            'BUNDLE_DIR_NAME': 'bundles/',
-            'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.dev.json'),
-        }
-}
+STATICFILES_DIRS = (
+    os.path.join(os.path.join(BASE_DIR, 'humangene-react'), 'build', 'static'),
+)
+
+
+print(STATICFILES_DIRS)
